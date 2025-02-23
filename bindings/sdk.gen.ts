@@ -5,111 +5,23 @@ import {
   createConfig,
   type Options,
 } from "@hey-api/client-axios";
-import type {
-  GetOrganizationsData,
-  GetOrganizationsResponse,
-  GetOrganizationsError,
-  GetOrganizationByIdData,
-  GetOrganizationByIdResponse,
-  GetOrganizationByIdError,
-  GetOrganizationProjectsData,
-  GetOrganizationProjectsResponse,
-  GetOrganizationProjectsError,
-  GetProjectByIdData,
-  GetProjectByIdResponse,
-  GetProjectByIdError,
-  PushLocalesToProjectData,
-  PushLocalesToProjectResponse,
-  PushLocalesToProjectError,
-  PullProjectData,
-  PullProjectResponse,
-  PullProjectError,
-} from "./types.gen";
+import type { GetUsersData, GetUsersResponse } from "./types.gen";
 
 export const client = createClient(createConfig());
 
-export const getOrganizations = <ThrowOnError extends boolean = false>(
-  options: Options<GetOrganizationsData, ThrowOnError>,
+/**
+ * Returns a list of users.
+ * Optional extended description in CommonMark or HTML.
+ */
+export const getUsers = <ThrowOnError extends boolean = false>(
+  options?: Options<GetUsersData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
-    GetOrganizationsResponse,
-    GetOrganizationsError,
+    GetUsersResponse,
+    unknown,
     ThrowOnError
   >({
     ...options,
-    url: "/organizations",
-  });
-};
-
-export const getOrganizationById = <ThrowOnError extends boolean = false>(
-  options: Options<GetOrganizationByIdData, ThrowOnError>,
-) => {
-  return (options?.client ?? client).get<
-    GetOrganizationByIdResponse,
-    GetOrganizationByIdError,
-    ThrowOnError
-  >({
-    ...options,
-    url: "/organizations/{organization_id}",
-  });
-};
-
-export const getOrganizationProjects = <ThrowOnError extends boolean = false>(
-  options: Options<GetOrganizationProjectsData, ThrowOnError>,
-) => {
-  return (options?.client ?? client).get<
-    GetOrganizationProjectsResponse,
-    GetOrganizationProjectsError,
-    ThrowOnError
-  >({
-    ...options,
-    url: "/organizations/{organization_id}/projects",
-  });
-};
-
-export const getProjectById = <ThrowOnError extends boolean = false>(
-  options: Options<GetProjectByIdData, ThrowOnError>,
-) => {
-  return (options?.client ?? client).get<
-    GetProjectByIdResponse,
-    GetProjectByIdError,
-    ThrowOnError
-  >({
-    ...options,
-    url: "/projects/{project_id}",
-  });
-};
-
-export const pushLocalesToProject = <ThrowOnError extends boolean = false>(
-  options: Options<PushLocalesToProjectData, ThrowOnError>,
-) => {
-  return (options?.client ?? client).put<
-    PushLocalesToProjectResponse,
-    PushLocalesToProjectError,
-    ThrowOnError
-  >({
-    ...options,
-    headers: {
-      "Content-Type": "application/json",
-      ...options?.headers,
-    },
-    url: "/projects/{project_id}/push",
-  });
-};
-
-export const pullProject = <ThrowOnError extends boolean = false>(
-  options: Options<PullProjectData, ThrowOnError>,
-) => {
-  return (options?.client ?? client).put<
-    PullProjectResponse,
-    PullProjectError,
-    ThrowOnError
-  >({
-    ...options,
-    headers: {
-      "Content-Type": "application/json",
-      ...options?.headers,
-    },
-    url: "/projects/{project_id}/pull",
+    url: "/users",
   });
 };
