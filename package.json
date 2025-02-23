@@ -9,9 +9,12 @@
     "test": "vitest",
     "cf-typegen": "wrangler types",
     "format": "prettier --write .",
+    "lint": "biome check .",
+    "lint:fix": "biome check --fix .",
     "generate:api": "echo 'todo'"
   },
   "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
     "@cloudflare/vitest-pool-workers": "^0.6.4",
     "@cloudflare/workers-types": "^4.20250214.0",
     "prettier": "^3.5.2",

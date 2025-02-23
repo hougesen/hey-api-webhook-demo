@@ -1,7 +1,11 @@
 import axios, { AxiosError } from "axios";
 
 const REPOSITORIES = [
-  { owner: "hougesen", name: "hey-api-webhook-demo", webhook_id: "" },
+  {
+    owner: "hougesen",
+    name: "hey-api-webhook-demo",
+    webhook_id: "codegen.yml",
+  },
 ];
 
 export default {
@@ -44,7 +48,12 @@ export default {
             const r = await axios
               .post(
                 `https://api.github.com/repos/${repo.owner}/${repo.name}/actions/workflows/${repo.webhook_id}/dispatches`,
-                {},
+                {
+                  ref: "main",
+                  inputs: {
+                    schema: JSON.stringify(body.schema),
+                  },
+                },
                 {
                   headers: {
                     Authorization: `Bearer ${env.GITHUB_API_KEY}`,
@@ -61,6 +70,8 @@ export default {
               }))
               .catch((error) => {
                 if (error instanceof AxiosError) {
+                  console.error(error?.response?.data || error);
+
                   return {
                     owner: repo.owner,
                     name: repo.name,
@@ -68,6 +79,8 @@ export default {
                     success: false,
                   };
                 }
+
+                console.error(error);
 
                 return {
                   owner: repo.owner,

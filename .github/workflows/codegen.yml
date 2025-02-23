@@ -1,5 +1,10 @@
 name: update openapi bindings
-on: [workflow_dispatch, push]
+on:
+  workflow_dispatch:
+    inputs:
+      schema:
+        required: true
+        type: string
 jobs:
   codegen:
     runs-on: ${{ matrix.os }}
@@ -19,8 +24,11 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
+      - run: echo "${{ github.event.inputs.schema }}" > schema.json
       - run: npm i
-      - run: npm run generate:api
+      - name: Generate bindings
+        run: npm run generate:api
+        continue-on-error: true
       - run: npm run format
       - uses: EndBug/add-and-commit@v9
         with:
