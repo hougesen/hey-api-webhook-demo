@@ -1,0 +1,28 @@
+name: update openapi bindings
+on: [workflow_dispatch, push]
+jobs:
+  codegen:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node: [22]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          check-latest: true
+      - uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - run: npm i
+      - run: npm run generate:api
+      - run: npm run format
+      - uses: EndBug/add-and-commit@v9
+        with:
+          add: bindings
+          message: "chore: updated api bindings"
