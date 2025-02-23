@@ -24,7 +24,7 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
-      - run: echo "${{ github.event.inputs.schema }}" > schema.json
+      - run: echo '${{ github.event.inputs.schema }}' > schema.json
       - run: npm i
       - name: Generate bindings
         run: npm run generate:api
@@ -32,5 +32,5 @@ jobs:
       - run: npm run format
       - uses: EndBug/add-and-commit@v9
         with:
-          add: bindings
+          add: bindings schema.json
           message: "chore: updated api bindings"
