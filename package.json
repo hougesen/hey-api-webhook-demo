@@ -11,18 +11,20 @@
     "format": "prettier --write .",
     "lint": "biome check .",
     "lint:fix": "biome check --fix .",
-    "generate:api": "echo 'todo'"
+    "generate:api": "openapi-ts"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "@cloudflare/vitest-pool-workers": "^0.6.4",
     "@cloudflare/workers-types": "^4.20250214.0",
+    "@hey-api/openapi-ts": "^0.61.2",
     "prettier": "^3.5.2",
     "typescript": "^5.5.2",
     "vitest": "~2.1.9",
     "wrangler": "^3.109.2"
   },
   "dependencies": {
+    "@hey-api/client-axios": "^0.6.1",
     "axios": "^1.7.9"
   }
 }
